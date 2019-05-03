@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_27_102137) do
+ActiveRecord::Schema.define(version: 2019_05_03_140716) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -24,10 +27,9 @@ ActiveRecord::Schema.define(version: 2019_04_27_102137) do
     t.integer "author_id"
     t.string "title"
     t.text "body"
-    t.date "date"
-    t.time "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "published_at"
     t.index ["author_id"], name: "index_publications_on_author_id"
     t.index ["title"], name: "index_publications_on_title"
   end
