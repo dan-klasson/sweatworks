@@ -1,8 +1,21 @@
 import React from 'react'
 import useFetch from 'fetch-suspense'
+import { useStateValue } from './state';
 
-export default function Author() {
-  const url = process.env.REACT_APP_BASE_URL
-  const data = useFetch(`${ url }/api/v1/authors`)
-  return data.map((value, i) => <div key={i}>{ value.name }</div>)
+const Author = () => {
+  const base = process.env.REACT_APP_BASE_URL
+  const authors = useFetch(`${ base }/authors`)
+  const [, dispatch] = useStateValue();
+
+  return authors.map((value, i) =>
+    <div key={ i }>
+      <button
+        onClick={ () => dispatch( { type: 'index', id: value.id } ) }
+        >
+        { value.name }
+      </button>
+    </div>
+  )
 }
+
+export default Author

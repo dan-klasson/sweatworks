@@ -6,9 +6,11 @@ class Api::V1::PublicationsController < Api::V1::BaseController
   # GET /authors/:author_id/publications
   def index
     @publications = Publication
-      .where(author: params[:author_id])
       .order(ordering_params(params))
-      .includes(:author)
+      .joins(:author)
+    if params[:author_id]
+      @publications = @publications.where(author: params[:author_id])
+    end
     render json: @publications
   end
 
