@@ -6,18 +6,21 @@ class Api::V1::PublicationsController < Api::V1::BaseController
   # GET /authors/:author_id/publications
   def index
     @publications = Publication
+      .paginate(page: params[:page])
       .order(ordering_params(params))
       .joins(:author)
     if params[:author_id]
       @publications = @publications.where(author: params[:author_id])
     end
-    render json: @publications
+    render json: paginate(@publications)
   end
 
   # GET /publications/search
   def search
-    @publications = Publication.search(params[:q])
-    render json: @publications
+    @publications = Publication
+      .paginate(page: params[:page])
+      .search(params[:q])
+    render json: paginate(@publications)
   end
 
   # GET /publications/:id

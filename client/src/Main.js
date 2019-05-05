@@ -11,20 +11,20 @@ const Main = () => {
   return (
     <Container>
       <Row>
-        <Col xs="3">
+        <Col sm="3">
           <div>
             <button onClick={ () => dispatch( { type: 'all' } ) }>All</button>
           </div>
           <Author />
         </Col>
-        <Col xs="9">
+        <Col sm="9">
           <Row>
-            <Col xs="6">
+            <Col sm="6">
               <button onClick={ () => {
                 dispatch( { type: 'invert' } )
               }}>{ !inverted ? 'Sort ascending' : 'Sort descending' }</button>
             </Col>
-            <Col xs="6">
+            <Col sm="6">
               <Input
                 type="text"
                 value={ search }
