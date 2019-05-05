@@ -14,31 +14,31 @@ RSpec.describe 'Publication API', type: :request do
 
     it 'contains expected publication list' do
       get "/api/v1/authors/#{author.id}/publications?sort=published_at"
-      expect(json.length).to be(5)
+      expect(json['data'].length).to be(5)
 
-      first = json.first
+      first = json['data'].first
       expect(first['title']).to match('Title 1')
-      expect(first['body']).to match('Body 1')
-      expect(first['published_at']).to match('2019-01-01T20:00:00.000Z')
+      expect(first['author']['name']).to match('Daniel Klasson 1')
+      expect(first['author']['email']).to match('dan1@example.com')
 
-      last = json.last
+      last = json['data'].last
       expect(last['title']).to match('Title 5')
-      expect(last['body']).to match('Body 5')
-      expect(last['published_at']).to match('2019-01-05T20:00:00.000Z')
     end
 
     it 'orders publication list' do
       get "/api/v1/authors/#{author.id}/publications?sort=-published_at"
 
-      first = json.first
+      first = json['data'].first
       expect(first['title']).to match('Title 5')
-      expect(first['body']).to match('Body 5')
-      expect(first['published_at']).to match('2019-01-05T20:00:00.000Z')
 
-      last = json.last
+      last = json['data'].last
       expect(last['title']).to match('Title 1')
-      expect(last['body']).to match('Body 1')
-      expect(last['published_at']).to match('2019-01-01T20:00:00.000Z')
+    end
+
+    it 'includes pagination data' do
+      get '/api/v1/publications/search'
+      expect(json).to include('total_pages')
+      expect(json).to include('page')
     end
   end
 
@@ -51,22 +51,28 @@ RSpec.describe 'Publication API', type: :request do
       expect(Publication.count).to be(5)
 
       get '/api/v1/publications/search', params: { q: 'Title 1' }
-      expect(json.length).to be(1)
+      expect(json['data'].length).to be(1)
     end
 
     it 'searches and finds all' do
       get '/api/v1/publications/search', params: { q: 'Title' }
-      expect(json.length).to be(5)
+      expect(json['data'].length).to be(5)
     end
 
     it 'searches with empty query' do
       get '/api/v1/publications/search', params: { q: '' }
-      expect(json.length).to be(5)
+      expect(json['data'].length).to be(5)
     end
 
     it 'searches without params' do
       get '/api/v1/publications/search'
-      expect(json.length).to be(5)
+      expect(json['data'].length).to be(5)
+    end
+
+    it 'includes pagination data' do
+      get '/api/v1/publications/search'
+      expect(json).to include('total_pages')
+      expect(json).to include('page')
     end
   end
 
@@ -89,7 +95,7 @@ RSpec.describe 'Publication API', type: :request do
         author_id: author.id,
         title: 'Some Publication',
         body: 'Some Body',
-        published_at: '1984-01-01 10:00',
+        published_at: '1984-01-01 10:00'
       }
     end
 
