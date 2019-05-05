@@ -5,7 +5,7 @@ import { useStateValue } from './state';
 const Author = () => {
   const base = process.env.REACT_APP_BASE_URL
   const authors = useFetch(`${ base }/authors`)
-  const [, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue()
 
   return authors.map((value, i) =>
     <div key={ i }>

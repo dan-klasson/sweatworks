@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 RSpec.describe 'Publication API', type: :request do
@@ -6,14 +5,15 @@ RSpec.describe 'Publication API', type: :request do
     let(:author) { create :author }
     before(:each) do
       create_list(:publication, 5, author: author)
-      get "/api/v1/authors/#{author.id}/publications"
     end
 
     it 'returns http success' do
+      get "/api/v1/authors/#{author.id}/publications"
       expect(response).to have_http_status(:success)
     end
 
     it 'contains expected publication list' do
+      get "/api/v1/authors/#{author.id}/publications?sort=published_at"
       expect(json.length).to be(5)
 
       first = json.first

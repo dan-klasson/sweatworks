@@ -1,11 +1,12 @@
 import React from 'react'
-import { Container, Row, Col } from 'reactstrap';
-import { useStateValue } from './state';
+import { Container, Row, Col } from 'reactstrap'
+import { useStateValue } from './state'
 import Publication from './Publication'
 import Author from './Author'
 
 const Main = () => {
-  const [, dispatch] = useStateValue();
+  const [ { inverted }, dispatch] = useStateValue()
+
   return (
     <Container>
       <Row>
@@ -16,6 +17,9 @@ const Main = () => {
           <Author />
         </Col>
         <Col xs="9">
+          <button onClick={ () => {
+            dispatch( { type: 'invert' } )
+          }}>{ !inverted ? 'Sort ascending' : 'Sort descending' }</button>
           <Publication />
         </Col>
       </Row>

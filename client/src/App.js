@@ -14,10 +14,10 @@ import { StateProvider } from './state';
 
 const App = () => {
   const base = process.env.REACT_APP_BASE_URL
-  const initialState = { url: `${ base }/publications` }
+  const initialState = { inverted: false, url: `${ base }/publications?sort=published_at` }
 
   return (
-    <StateProvider initialState={initialState} reducer={UrlReducer}>
+    <StateProvider initialState={ initialState } reducer={ UrlReducer }>
       <Navbar color="dark" dark expand="md">
         <NavbarBrand href="/">sweatworks</NavbarBrand>
         <NavbarToggler />
