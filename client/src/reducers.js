@@ -1,9 +1,13 @@
+/**
+ * URL manipulator reducer. Used for all links throughout the app
+ */
 export const UrlReducer = (state, action) => {
   const base = process.env.REACT_APP_BASE_URL
 
   const order = () => {
     return `sort=${ state.inverted ? '-' : '' }published_at`
   }
+
   const qsUpdateReplace = (uri, key, value) => {
     var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
     var separator = uri.indexOf('?') !== -1 ? "&" : "?";
@@ -14,6 +18,7 @@ export const UrlReducer = (state, action) => {
       return uri + separator + key + "=" + value;
     }
   }
+
   switch (action.type) {
     case 'index':
       return {

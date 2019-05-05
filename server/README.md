@@ -1,24 +1,18 @@
-# README
+## Installation
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Database Setup
 
-Things you may want to cover:
+Uses postgres. See [database.yml](config/database.yml) for details.
+**Note:** DB credentials only added for install simplicity. They would normally never go in the repo.
 
-* Ruby version
+### Create Database & Seed it
 
-* System dependencies
+    rails db:setup db:migrate db:seed
 
-* Configuration
+### Start server
 
-* Database creation
+     rails s
 
-* Database initialization
+### Run the Tests
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    rails spec
