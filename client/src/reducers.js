@@ -29,7 +29,7 @@ export const UrlReducer = (state, action) => {
       }
 
     case 'invert':
-      const sort = state.inverted ? '-published_at' : 'published_at'
+      const sort = !state.inverted ? '-published_at' : 'published_at'
       const invert = qsUpdateReplace(state.url, 'sort', sort)
       return {...state, inverted: !state.inverted, url: invert }
 

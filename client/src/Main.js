@@ -27,6 +27,7 @@ const Main = () => {
             <Col sm="6">
               <Input
                 type="text"
+                className="search"
                 value={ search }
                 onChange={ e => setSearch( e.target.value )}
                 onKeyPress={event => {

@@ -8,11 +8,11 @@ class Api::V1::PublicationsController < Api::V1::BaseController
     @publications = Publication
       .paginate(page: params[:page])
       .order(ordering_params(params))
-      .joins(:author)
+      .author
     if params[:author_id]
       @publications = @publications.where(author: params[:author_id])
     end
-    render json: paginate(@publications)
+    render json: output
   end
 
   # GET /publications/search
@@ -20,7 +20,8 @@ class Api::V1::PublicationsController < Api::V1::BaseController
     @publications = Publication
       .paginate(page: params[:page])
       .search(params[:q])
-    render json: paginate(@publications)
+      .author
+    render json: output
   end
 
   # GET /publications/:id
@@ -55,4 +56,19 @@ class Api::V1::PublicationsController < Api::V1::BaseController
   def set_publication
     @publication = Publication.find(params[:id])
   end
+
+  def output
+    Jbuilder.new do |j|
+      j.data @publications do |pub|
+        j.(pub, :id, :title)
+        j.author do
+          j.name pub.author.name
+          j.email pub.author.email
+        end
+      end
+      j.page @publications.current_page
+      j.total_pages @publications.total_pages
+    end.target!
+  end
+
 end

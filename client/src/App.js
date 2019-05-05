@@ -1,13 +1,6 @@
 import React, { Suspense } from 'react'
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink} from 'reactstrap';
-import './App.css'
+import { Navbar, NavbarBrand } from 'reactstrap';
+import './App.scss'
 import Main from './Main'
 import { UrlReducer } from './reducers'
 import { StateProvider } from './state';
@@ -20,14 +13,6 @@ const App = () => {
     <StateProvider initialState={ initialState } reducer={ UrlReducer }>
       <Navbar color="dark" dark expand="md">
         <NavbarBrand href="/">sweatworks</NavbarBrand>
-        <NavbarToggler />
-        <Collapse navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/" />
-            </NavItem>
-          </Nav>
-        </Collapse>
       </Navbar>
 
       <Suspense fallback="Loading...">

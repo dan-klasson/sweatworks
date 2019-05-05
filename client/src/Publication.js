@@ -1,20 +1,39 @@
 import React from 'react'
 import useFetch from 'fetch-suspense'
-import { Row, Col } from 'reactstrap'
+import { Table, Row, Col } from 'reactstrap'
 import { useStateValue } from './state';
 import Paginate from './Paginate'
 
 const Publication = () => {
   const [{ url }] = useStateValue();
   const response = useFetch( url )
-  console.log( url )
-  const publications = response.data.map((value, i) => <div key={ i }>{ value.title }</div>)
-  console.log('total_pages: ', response.total_pages)
+  const tbody = response.data.map((value, i) => {
+    return (
+      <tr key={ i }>
+        <th scope="row">{ value.id }</th>
+        <td>{ value.author.name}</td>
+        <td>{ value.author.email}</td>
+        <td>{ value.title }</td>
+      </tr>
+    )
+  })
   return (
     <div>
       <Row>
         <Col>
-          { publications }
+          <Table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Author</th>
+                <th>Email</th>
+                <th>Title</th>
+              </tr>
+            </thead>
+            <tbody>
+              { tbody }
+            </tbody>
+          </Table>
         </Col>
       </Row>
       <Row>
